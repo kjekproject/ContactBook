@@ -99,10 +99,10 @@ class Phone
     /**
      * Set person
      *
-     * @param \ContactBookBundle\Entity\User $person
+     * @param \ContactBookBundle\Entity\Person $person
      * @return Phone
      */
-    public function setPerson(\ContactBookBundle\Entity\User $person = null)
+    public function setPerson(\ContactBookBundle\Entity\Person $person = null)
     {
         $this->person = $person;
 
@@ -112,7 +112,7 @@ class Phone
     /**
      * Get person
      *
-     * @return \ContactBookBundle\Entity\User 
+     * @return \ContactBookBundle\Entity\Person
      */
     public function getPerson()
     {

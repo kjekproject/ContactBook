@@ -5,7 +5,8 @@ namespace ContactBookBundle\Controller;
 use ContactBookBundle\Entity\Phone;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Phone controller.
@@ -15,62 +16,26 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component
 class PhoneController extends Controller
 {
     /**
-     * Lists all phone entities.
-     *
-     * @Route("/", name="phone_index")
-     * @Method("GET")
-     */
-    public function indexAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $phones = $em->getRepository('ContactBookBundle:Phone')->findAll();
-
-        return $this->render('phone/index.html.twig', array(
-            'phones' => $phones,
-        ));
-    }
-
-    /**
      * Creates a new phone entity.
      *
-     * @Route("/new", name="phone_new")
-     * @Method({"GET", "POST"})
+     * @Route("/new/{id}", name="phone_new")
+     * @Method({"POST"})
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request, $id)
     {
         $phone = new Phone();
         $form = $this->createForm('ContactBookBundle\Form\PhoneType', $phone);
         $form->handleRequest($request);
+        
+        $em = $this->getDoctrine()->getManager();
+        $person = $em->getRepository('ContactBookBundle:Person')->find($id);        
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            $phone->setPerson($person);
             $em->persist($phone);
             $em->flush();
-
-            return $this->redirectToRoute('phone_show', array('id' => $phone->getId()));
         }
-
-        return $this->render('phone/new.html.twig', array(
-            'phone' => $phone,
-            'form' => $form->createView(),
-        ));
-    }
-
-    /**
-     * Finds and displays a phone entity.
-     *
-     * @Route("/{id}", name="phone_show")
-     * @Method("GET")
-     */
-    public function showAction(Phone $phone)
-    {
-        $deleteForm = $this->createDeleteForm($phone);
-
-        return $this->render('phone/show.html.twig', array(
-            'phone' => $phone,
-            'delete_form' => $deleteForm->createView(),
-        ));
+        return $this->redirectToRoute('show', array('id' => $id));
     }
 
     /**
@@ -81,20 +46,18 @@ class PhoneController extends Controller
      */
     public function editAction(Request $request, Phone $phone)
     {
-        $deleteForm = $this->createDeleteForm($phone);
         $editForm = $this->createForm('ContactBookBundle\Form\PhoneType', $phone);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('phone_edit', array('id' => $phone->getId()));
+            return $this->redirectToRoute('show', array('id' => $phone->getPerson()->getId()));
         }
 
         return $this->render('phone/edit.html.twig', array(
             'phone' => $phone,
             'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -106,31 +69,10 @@ class PhoneController extends Controller
      */
     public function deleteAction(Request $request, Phone $phone)
     {
-        $form = $this->createDeleteForm($phone);
-        $form->handleRequest($request);
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($phone);
+        $em->flush();
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($phone);
-            $em->flush();
-        }
-
-        return $this->redirectToRoute('phone_index');
-    }
-
-    /**
-     * Creates a form to delete a phone entity.
-     *
-     * @param Phone $phone The phone entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(Phone $phone)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('phone_delete', array('id' => $phone->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
+        return $this->redirectToRoute('show', array( 'id' => $phone->getPerson()->getId()));
     }
 }

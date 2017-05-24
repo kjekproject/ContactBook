@@ -36,7 +36,7 @@ class Email
     private $type;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="emails")
+     * @ORM\ManyToOne(targetEntity="Person", inversedBy="emails")
      */
     private $person;
 
@@ -94,5 +94,28 @@ class Email
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * Set person
+     *
+     * @param \ContactBookBundle\Entity\User $person
+     * @return Email
+     */
+    public function setPerson(\ContactBookBundle\Entity\User $person = null)
+    {
+        $this->person = $person;
+
+        return $this;
+    }
+
+    /**
+     * Get person
+     *
+     * @return \ContactBookBundle\Entity\User 
+     */
+    public function getPerson()
+    {
+        return $this->person;
     }
 }
