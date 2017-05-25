@@ -77,10 +77,10 @@ class Team
     /**
      * Add persons
      *
-     * @param \ContactBookBundle\Entity\User $persons
+     * @param \ContactBookBundle\Entity\Person $persons
      * @return Team
      */
-    public function addPerson(\ContactBookBundle\Entity\User $persons)
+    public function addPerson(\ContactBookBundle\Entity\Person $persons)
     {
         $this->persons[] = $persons;
 
@@ -90,9 +90,9 @@ class Team
     /**
      * Remove persons
      *
-     * @param \ContactBookBundle\Entity\User $persons
+     * @param \ContactBookBundle\Entity\Person $persons
      */
-    public function removePerson(\ContactBookBundle\Entity\User $persons)
+    public function removePerson(\ContactBookBundle\Entity\Person $persons)
     {
         $this->persons->removeElement($persons);
     }
