@@ -1,0 +1,101 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1 class="text-center"> {{ person.name }} {{ person.surname }}</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ person.description }}</td>
+                <td>
+                    <a class="btn btn-default btn-sm" href="{{ path('edit', { 'id': person.id }) }}">Edit</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    {{ form_start(delete_form) }}
+        <input type="submit" value="Delete">
+    {{ form_end(delete_form) }} <br/>
+        
+    <h3>Addresses</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Street name</th>
+                <th>Building number</th>
+                <th>Flat number</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for address in person.addresses %}
+            <tr>
+                <td>{{ address.streetName }}</td>
+                <td>{{ address.buildingNumber }}</td>
+                <td>{{ address.flatNumber }}</td>
+                <td>
+                    <a class="btn btn-default btn-sm" href="{{ path('address_delete', { 'id': address.id }) }}">Delete</a>
+                    <a class="btn btn-default btn-sm" href="{{ path('address_edit', { 'id': address.id }) }}">Edit</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a class="btn btn-default" href="{{ path('edit', { 'id': person.id }) }}">Add address</a><br/><br/>
+            
+    <h3>Emails</h3>        
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Email address</th>
+                <th>Type</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for email in person.emails %}
+            <tr>
+                <td>{{ email.emailAddress }}</td>
+                <td>{{ email.type }}</td>
+                <td>
+                    <a class="btn btn-default btn-sm" href="{{ path('email_delete', {'id': email.id}) }}">Delete</a>
+                    <a class="btn btn-default btn-sm" href="{{ path('email_edit', {'id': email.id}) }}">Edit</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a class="btn btn-default" href="{{ path('edit', { 'id': person.id }) }}">Add email</a><br/><br/>
+
+    <h3>Phone numbers</h3>        
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Phone number</th>
+                <th>Type</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for phone in person.phones %}
+            <tr>
+                <td>{{ phone.number }}</td>
+                <td>{{ phone.type }}</td>
+                <td>
+                    <a class="btn btn-default btn-sm" href="{{ path('phone_delete', {'id': phone.id}) }}">Delete</a>
+                    <a class="btn btn-default btn-sm" href="{{ path('phone_edit', {'id': phone.id}) }}">Edit</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a class="btn btn-default" href="{{ path('edit', { 'id': person.id }) }}">Add phone</a><br/><br/>
+    <a class="btn btn-primary" href="{{ path('index') }}">Back to the list</a>
+{% endblock %}
