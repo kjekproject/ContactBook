@@ -103,7 +103,7 @@ class PersonController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('edit', array('id' => $person->getId()));
+            return $this->redirectToRoute('show', array('id' => $person->getId()));
         }
 
         return $this->render('person/edit.html.twig', array(

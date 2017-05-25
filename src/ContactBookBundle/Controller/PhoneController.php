@@ -65,7 +65,7 @@ class PhoneController extends Controller
      * Deletes a phone entity.
      *
      * @Route("/{id}", name="phone_delete")
-     * @Method("DELETE")
+     * @Method("GET")
      */
     public function deleteAction(Request $request, Phone $phone)
     {
