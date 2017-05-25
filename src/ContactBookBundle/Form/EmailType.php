@@ -5,6 +5,7 @@ namespace ContactBookBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class EmailType extends AbstractType
 {
@@ -13,7 +14,12 @@ class EmailType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('emailAddress')->add('type');
+        $builder->add('emailAddress')->add('type', ChoiceType::class, array(
+            'choices' => array(
+                'private' => 'private', 
+                'business' => 'business',
+                'other' => 'other')
+        ));
     }
     
     /**

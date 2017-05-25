@@ -3,6 +3,7 @@
 namespace ContactBookBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * email
@@ -25,6 +26,7 @@ class Email
      * @var string
      *
      * @ORM\Column(name="email_address", type="string", length=255, unique=true)
+     * @Assert\Email(message = "The email is not a valid email.")
      */
     private $emailAddress;
 
@@ -32,6 +34,8 @@ class Email
      * @var string
      *
      * @ORM\Column(name="type", type="string", length=32)
+     * @Assert\Choice(choices = {"private", "business", "other"}, 
+     *      message = "Choose a valid type.")
      */
     private $type;
 

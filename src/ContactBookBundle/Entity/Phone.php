@@ -3,6 +3,7 @@
 namespace ContactBookBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Phone
@@ -25,6 +26,8 @@ class Phone
      * @var string
      *
      * @ORM\Column(name="number", type="string", length=64, unique=true)
+     * @Assert\Length(min = 3, minMessage = "Phone number must be at least 3 characters long.")
+     * @Assert\Regex(pattern = "/^[#+0-9]\d+$/", match = true, message = "Invalid number.")
      */
     private $number;
 
@@ -32,6 +35,8 @@ class Phone
      * @var string
      *
      * @ORM\Column(name="type", type="string", length=64)
+     * @Assert\Choice(choices = {"home", "business", "private", "other"}, 
+     *      message = "Choose a valid type.")
      */
     private $type;
 

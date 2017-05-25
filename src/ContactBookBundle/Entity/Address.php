@@ -1,6 +1,7 @@
 <?php
 
 namespace ContactBookBundle\Entity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -25,6 +26,7 @@ class Address
      * @var string
      *
      * @ORM\Column(name="street_name", type="string", length=128)
+     * @Assert\Length(min = 2, minMessage = "Street name must be at least 2 characters long.")
      */
     private $streetName;
 
@@ -32,6 +34,7 @@ class Address
      * @var int
      *
      * @ORM\Column(name="building_number", type="string", length=32)
+     * @Assert\NotNull()
      */
     private $buildingNumber;
 
