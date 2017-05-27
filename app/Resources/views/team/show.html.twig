@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1 class="text-center">{{ team.name }}</h1>
+    
+    {{ form_start(delete_form) }}
+        <input type="submit" value="Delete the team">
+    {{ form_end(delete_form) }}<br/>
+    
+    <a class="btn btn-default" href="{{ path('team_index') }}">Back to the list</a><br/>
+          
+    <h2>TEAM MEMBERS</h2>
+    <table class ="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Description</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for person in team.persons %}
+            <tr>
+                <td>{{ person.name }}</td>
+                <td>{{ person.surname }}</td>
+                <td>{{ person.description }}</td>
+                <td>
+                    <a class="btn btn-default btn-sm" href="{{ path('person_team_remove', { 'personId': person.id, 'teamId': team.id } ) }}">Remove</a>
+                </td>
+            </tr>
+        {% endfor %}
+                
+                
+        </tbody>
+    </table>
+    
+{% endblock %}

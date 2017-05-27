@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1 class="text-center">ADD PERSON TO THE TEAM</h1>
+
+    <h3>{{ person.name }} {{ person.surname }}</h3><br/>
+        
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Team name</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for team in teams %}
+                {% if person not in team.persons %}
+                <tr>
+                    <td>{{ team.name }}</td>
+                    <td>
+                        <a class="btn btn-default btn-sm" href="{{ path('person_team_add', { 'personId': person.id, 'teamId': team.id }) }}">Add to the team</a>
+                    </td>
+                </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+    
+{% endblock %}

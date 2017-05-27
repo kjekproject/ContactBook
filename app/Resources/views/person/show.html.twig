@@ -23,6 +23,28 @@
     {{ form_start(delete_form) }}
         <input type="submit" value="Delete">
     {{ form_end(delete_form) }} <br/>
+    
+    <h3>Teams</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Team name</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for team in person.teams %}
+            <tr>
+                <td>{{ team.name }}</td>
+                <td>
+                    <a class="btn btn-default btn-sm" href="{{ path('person_team_remove', { 'personId': person.id, 'teamId': team.id }) }}">Remove from the team</a>
+                    <a class="btn btn-default btn-sm" href="{{ path('team_show', { 'id': team.id }) }}">Show the team</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a class="btn btn-default" href="{{ path('choose_team', { 'id': person.id }) }}">Add to the team</a>
         
     <h3>Addresses</h3>
     <table class="table">
