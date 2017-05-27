@@ -16,18 +16,18 @@
         <tbody>
         {% for person in people %}
             <tr>
-                <td><a href="{{ path('show', { 'id': person.id }) }}">{{ person.id }}</a></td>
+                <td><a href="{{ path('person_show', { 'id': person.id }) }}">{{ person.id }}</a></td>
                 <td>{{ person.name }}</td>
                 <td>{{ person.surname }}</td>
                 <td>{{ person.description }}</td>
                 <td>
-                    <a class="btn btn-default btn-sm" href="{{ path('show', { 'id': person.id }) }}">show</a>
+                    <a class="btn btn-default btn-sm" href="{{ path('person_show', { 'id': person.id }) }}">show</a>
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a class="btn btn-default" href="{{ path('new') }}">Create a new person</a>
+    <a class="btn btn-default" href="{{ path('person_new') }}">Create a new person</a>
 
 {% endblock %}

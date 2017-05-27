@@ -14,7 +14,7 @@
             <tr>
                 <td>{{ person.description }}</td>
                 <td>
-                    <a class="btn btn-default btn-sm" href="{{ path('edit', { 'id': person.id }) }}">Edit</a>
+                    <a class="btn btn-default btn-sm" href="{{ path('person_edit', { 'id': person.id }) }}">Edit</a>
                 </td>
             </tr>
         </tbody>
@@ -44,7 +44,7 @@
         {% endfor %}
         </tbody>
     </table>
-    <a class="btn btn-default" href="{{ path('choose_team', { 'id': person.id }) }}">Add to the team</a>
+    <a class="btn btn-default" href="{{ path('person_choose_team', { 'id': person.id }) }}">Add to the team</a>
         
     <h3>Addresses</h3>
     <table class="table">
@@ -70,7 +70,7 @@
         {% endfor %}
         </tbody>
     </table>
-    <a class="btn btn-default" href="{{ path('edit', { 'id': person.id }) }}">Add address</a><br/><br/>
+    <a class="btn btn-default" href="{{ path('person_edit', { 'id': person.id }) }}">Add address</a><br/><br/>
             
     <h3>Emails</h3>        
     <table class="table">
@@ -94,7 +94,7 @@
         {% endfor %}
         </tbody>
     </table>
-    <a class="btn btn-default" href="{{ path('edit', { 'id': person.id }) }}">Add email</a><br/><br/>
+    <a class="btn btn-default" href="{{ path('person_edit', { 'id': person.id }) }}">Add email</a><br/><br/>
 
     <h3>Phone numbers</h3>        
     <table class="table">
@@ -118,6 +118,6 @@
         {% endfor %}
         </tbody>
     </table>
-    <a class="btn btn-default" href="{{ path('edit', { 'id': person.id }) }}">Add phone</a><br/><br/>
-    <a class="btn btn-primary" href="{{ path('index') }}">Back to the list</a>
+    <a class="btn btn-default" href="{{ path('person_edit', { 'id': person.id }) }}">Add phone</a><br/><br/>
+    <a class="btn btn-primary" href="{{ path('person_index') }}">Back to the list</a>
 {% endblock %}
