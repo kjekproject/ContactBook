@@ -35,7 +35,7 @@ class EmailController extends Controller
             $em->persist($email);
             $em->flush();
         }
-        return $this->redirectToRoute('show', array('id' => $id));
+        return $this->redirectToRoute('person_show', array('id' => $id));
     }
 
     /**
@@ -52,7 +52,7 @@ class EmailController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('show', array('id' => $email->getPerson()->getId()));
+            return $this->redirectToRoute('person_show', array('id' => $email->getPerson()->getId()));
         }
 
         return $this->render('email/edit.html.twig', array(
@@ -73,6 +73,6 @@ class EmailController extends Controller
         $em->remove($email);
         $em->flush();
 
-        return $this->redirectToRoute('show', array('id' => $email->getPerson()->getId()));
+        return $this->redirectToRoute('person_show', array('id' => $email->getPerson()->getId()));
     }
 }

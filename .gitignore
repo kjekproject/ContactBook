@@ -1,0 +1,14 @@
+/nbproject
+/web
+/build/
+/vendor/
+/bin/
+/composer.phar
+/tests/
+/app/*
+!/app/Resources
+!/app/config/
+/app/config/*
+!/app/config/config.yml
+/composer.json
+/composer.lock

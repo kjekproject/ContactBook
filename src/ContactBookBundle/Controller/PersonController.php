@@ -10,18 +10,19 @@ use Symfony\Component\HttpFoundation\Request;
 use ContactBookBundle\Entity\Address;
 use ContactBookBundle\Entity\Email;
 use ContactBookBundle\Entity\Phone;
+use ContactBookBundle\Entity\Team;
 
 /**
  * Person controller.
  *
- * @Route("/")
+ * @Route("person")
  */
 class PersonController extends Controller
-{
+{ 
     /**
      * Lists all person entities.
      *
-     * @Route("/", name="index")
+     * @Route("/", name="person_index")
      * @Method("GET")
      */
     public function indexAction()
@@ -38,7 +39,7 @@ class PersonController extends Controller
     /**
      * Creates a new person entity.
      *
-     * @Route("/new", name="new")
+     * @Route("/new", name="person_new")
      * @Method({"GET", "POST"})
      */
     public function newAction(Request $request)
@@ -52,7 +53,7 @@ class PersonController extends Controller
             $em->persist($person);
             $em->flush();
 
-            return $this->redirectToRoute('show', array('id' => $person->getId()));
+            return $this->redirectToRoute('person_show', array('id' => $person->getId()));
         }
 
         return $this->render('person/new.html.twig', array(
@@ -64,7 +65,7 @@ class PersonController extends Controller
     /**
      * Finds and displays a person entity.
      *
-     * @Route("/{id}", name="show")
+     * @Route("/{id}", name="person_show")
      * @Method("GET")
      */
     public function showAction(Person $person)
@@ -80,7 +81,7 @@ class PersonController extends Controller
     /**
      * Displays a form to edit an existing person entity.
      *
-     * @Route("/{id}/edit", name="edit")
+     * @Route("/{id}/edit", name="person_edit")
      * @Method({"GET", "POST"})
      */
     public function editAction(Request $request, Person $person)
@@ -103,7 +104,7 @@ class PersonController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('show', array('id' => $person->getId()));
+            return $this->redirectToRoute('person_show', array('id' => $person->getId()));
         }
 
         return $this->render('person/edit.html.twig', array(
@@ -118,7 +119,7 @@ class PersonController extends Controller
     /**
      * Deletes a person entity.
      *
-     * @Route("/{id}", name="delete")
+     * @Route("/{id}", name="person_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, Person $person)
@@ -132,7 +133,7 @@ class PersonController extends Controller
             $em->flush();
         }
 
-        return $this->redirectToRoute('index');
+        return $this->redirectToRoute('person_index');
     }
 
     /**
@@ -145,11 +146,52 @@ class PersonController extends Controller
     private function createDeleteForm(Person $person)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('delete', array('id' => $person->getId())))
+            ->setAction($this->generateUrl('person_delete', array('id' => $person->getId())))
             ->setMethod('DELETE')
             ->getForm()
         ;
+    }   
+    
+    /**
+     * @Route("/{id}/team", name="person_choose_team")
+     */
+    public function chooseTeam(Person $person)
+    {
+        $teams = $this->getDoctrine()->getRepository('ContactBookBundle:Team')->findAll();
+        
+        return $this->render('person/choose_team.html.twig', array(
+            'teams' => $teams,
+            'person' => $person,
+        ));
     }
     
+    /**
+     * @Route("/{personId}/{teamId}", name="person_team_add")
+     */
+    public function addPersonToTheTeam($personId, $teamId)
+    {
+        $person = $this->getDoctrine()->getRepository('ContactBookBundle:Person')->find($personId);
+        $team = $this->getDoctrine()->getRepository('ContactBookBundle:Team')->find($teamId);
+        
+        $person->addTeam($team);
+        
+        $this->getDoctrine()->getManager()->flush();
+        
+        return $this->redirectToRoute('person_show', array('id' => $person->getId()));
+    }
     
+    /**
+     * @Route("/{personId}/{teamId}/remove", name="person_team_remove")
+     */
+    public function removePersonFromTheTeam($personId, $teamId)
+    {
+        $person = $this->getDoctrine()->getRepository('ContactBookBundle:Person')->find($personId);
+        $team = $this->getDoctrine()->getRepository('ContactBookBundle:Team')->find($teamId);
+        
+        $person->removeTeam($team);
+        
+        $this->getDoctrine()->getManager()->flush();
+        
+        return $this->redirectToRoute('person_show', array('id' => $person->getId()));
+    }
 }

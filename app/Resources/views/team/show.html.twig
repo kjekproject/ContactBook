@@ -27,6 +27,7 @@
                 <td>{{ person.description }}</td>
                 <td>
                     <a class="btn btn-default btn-sm" href="{{ path('person_team_remove', { 'personId': person.id, 'teamId': team.id } ) }}">Remove</a>
+                    <a class="btn btn-default btn-sm" href="{{ path('person_show', { 'id': person.id } ) }}">Show</a>
                 </td>
             </tr>
         {% endfor %}

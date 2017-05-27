@@ -48,7 +48,7 @@ class TeamController extends Controller
             $em->persist($team);
             $em->flush();
 
-            return $this->redirectToRoute('team_show', array('id' => $team->getId()));
+            return $this->redirectToRoute('team_index');
         }
 
         return $this->render('team/new.html.twig', array(
@@ -87,7 +87,7 @@ class TeamController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('team_show', array('id' => $team->getId()));
+            return $this->redirectToRoute('team_index', array('id' => $team->getId()));
         }
 
         return $this->render('team/edit.html.twig', array(

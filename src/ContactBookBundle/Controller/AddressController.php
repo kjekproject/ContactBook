@@ -35,7 +35,7 @@ class AddressController extends Controller
             $em->persist($address);
             $em->flush();
         }
-        return $this->redirectToRoute('show', array('id' => $id));
+        return $this->redirectToRoute('person_show', array('id' => $id));
     }
 
     /**
@@ -52,7 +52,7 @@ class AddressController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('show', array('id' => $address->getPerson()->getId()));
+            return $this->redirectToRoute('person_show', array('id' => $address->getPerson()->getId()));
         }
 
         return $this->render('address/edit.html.twig', array(
@@ -73,6 +73,6 @@ class AddressController extends Controller
         $em->remove($address);
         $em->flush();
 
-        return $this->redirectToRoute('show', array('id' => $address->getPerson()->getId()));
+        return $this->redirectToRoute('person_show', array('id' => $address->getPerson()->getId()));
     }
 }
